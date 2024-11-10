@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 // GET function
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
     const productId = parseInt(params.id, 10);
 
@@ -28,7 +28,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // PUT function
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const productId = parseInt(params.id, 10);
 
@@ -36,7 +36,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
     }
 
-    const { name, description, price, category, image, stock } = await req.json();
+    const { name, description, price, category, image, stock } = await request.json();
 
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
@@ -51,7 +51,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE function
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     const productId = parseInt(params.id, 10);
 
