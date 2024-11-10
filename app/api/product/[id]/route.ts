@@ -5,9 +5,9 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 // GET function ดึงข้อมูลผลิตภัณฑ์ตาม ID
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params; // ดึง id จาก params
+    const { id } = params; // ใช้ params จาก context
     const product = await prisma.product.findUnique({
       where: { id: parseInt(id) }, // ใช้ id ที่ได้จาก params และแปลงเป็น number
     });
@@ -24,9 +24,9 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // POST function สำหรับสร้างผลิตภัณฑ์ใหม่
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { name, description, price, category, image, stock } = await req.json();
+    const { name, description, price, category, image, stock } = await request.json();
     const newProduct = await prisma.product.create({
       data: {
         name,
