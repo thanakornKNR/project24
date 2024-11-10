@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import type { NextRequest } from 'next/server'
 
 // สร้าง PrismaClient สำหรับเชื่อมต่อกับฐานข้อมูล
 const prisma = new PrismaClient();
 
 // GET function ดึงข้อมูลผลิตภัณฑ์ตาม ID
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const productId = Number(params.id);
 
