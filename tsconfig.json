@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth]/route.ts",
-    "prisma/**/*.ts"  // เพิ่มบรรทัดนี้เพื่อรวมโฟลเดอร์ prisma
-, "prisma/seed.mjs"  ],
+    "prisma/**/*.ts",
+    "app/**/*", // Adjust this pattern based on your project structure
+    "lib/**/*"
+  ],
   "exclude": ["node_modules"]
 }
