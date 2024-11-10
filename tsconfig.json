@@ -30,6 +30,7 @@
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth]/route.ts",
     "prisma/**/*.ts",
+    "prisma/seed.mjs",
     "app/**/*", // Adjust this pattern based on your project structure
     "lib/**/*"
   ],
