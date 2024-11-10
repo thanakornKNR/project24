@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // GET function สำหรับดึงข้อมูลผลิตภัณฑ์ตาม ID
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = context.params; // ใช้ params จาก context
+        const { id } = params;  // ใช้ params จาก context
         const productId = Number(id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
@@ -31,9 +31,9 @@ export async function GET(req: Request, context: { params: { id: string } }) {
 }
 
 // PUT function สำหรับอัพเดตผลิตภัณฑ์ตาม ID
-export async function PUT(req: Request, context: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = context.params; // ใช้ params จาก context
+        const { id } = params;  // ใช้ params จาก context
         const productId = Number(id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
@@ -63,9 +63,9 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
 }
 
 // DELETE function สำหรับลบผลิตภัณฑ์ตาม ID
-export async function DELETE(req: Request, context: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = context.params; // ใช้ params จาก context
+        const { id } = params;  // ใช้ params จาก context
         const productId = Number(id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
