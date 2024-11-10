@@ -5,9 +5,9 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 // GET function ดึงข้อมูลผลิตภัณฑ์ตาม ID
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = context.params; // ใช้ params จาก context
+    const { id } = params; // ใช้ params จาก context
     const product = await prisma.product.findUnique({
       where: { id: parseInt(id) }, // ใช้ id ที่ได้จาก params และแปลงเป็น number
     });
