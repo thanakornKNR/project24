@@ -3,17 +3,10 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-// กำหนด interface สำหรับ context เพื่อกำหนดประเภทของ params
-interface Context {
-  params: {
-    id: string;
-  };
-}
-
 // GET function
-export async function GET(req: Request, context: Context) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(context.params.id);
+    const productId = Number(params.id);
 
     if (isNaN(productId)) throw new Error("Invalid product ID");
 
@@ -33,9 +26,9 @@ export async function GET(req: Request, context: Context) {
 }
 
 // PUT function
-export async function PUT(req: Request, context: Context) {
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(context.params.id);
+    const productId = Number(params.id);
 
     if (isNaN(productId)) throw new Error("Invalid product ID");
 
@@ -54,9 +47,9 @@ export async function PUT(req: Request, context: Context) {
 }
 
 // DELETE function
-export async function DELETE(req: Request, context: Context) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(context.params.id);
+    const productId = Number(params.id);
 
     if (isNaN(productId)) throw new Error("Invalid product ID");
 
