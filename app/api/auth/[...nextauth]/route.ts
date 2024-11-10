@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
                 });
-                
+
 
                 if (user && user.password) {
                     const isValid = await bcrypt.compare(credentials.password, user.password);
@@ -46,6 +46,7 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             async profile(profile) {
+
                 const userId = Number(profile.sub); // แปลงให้เป็น number
                 return {
                     id: userId,
@@ -53,36 +54,37 @@ export const authOptions: NextAuthOptions = {
                     email: profile.email,
                     image: profile.picture,
                     role: 'member', // คุณสามารถกำหนด role เริ่มต้นได้ที่นี่
+
                 };
             },
         }),
-        
+
     ],
     adapter: PrismaAdapter(prisma),
     session: {
         strategy: 'jwt',
     },
     callbacks: {
-    jwt: async ({ token, user }) => {
-        if (user) {
-            token.id = Number(user.id);
-            token.role = user.role;
-        }
-        console.log('JWT Token:', token); // เพิ่ม logging
-        return token;
+        jwt: async ({ token, user }) => {
+            if (user) {
+                token.id = Number(user.id);
+                token.role = user.role;
+            }
+
+            return token;
+        },
+        session: async ({ session, token }) => {
+            if (session.user) {
+                session.user.id = Number(token.id);
+                session.user.role = token.role as string;
+            }
+
+            return session;
+        },
+        async redirect({ baseUrl }) {
+            return `${baseUrl}/`;
+        },
     },
-    session: async ({ session, token }) => {
-        if (session.user) {
-            session.user.id = Number(token.id);
-            session.user.role = token.role as string;
-        }
-        console.log('Session:', session); // เพิ่ม logging
-        return session;
-    },
-    async redirect({ baseUrl }) {
-        return `${baseUrl}/profile`;
-      },
-},
 
 };
 

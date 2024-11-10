@@ -10,10 +10,10 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const { pathname } = request.nextUrl;
 
     if (
-        pathname.startsWith('/protected') &&
+        pathname.startsWith('/admin') &&
         (!user || user.role !== 'admin')
     ) {
-        return NextResponse.redirect(new URL('/profile', request.url))
+        return NextResponse.redirect(new URL('/', request.url))
     }
 
 

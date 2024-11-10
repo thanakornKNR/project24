@@ -20,8 +20,9 @@ model User {
   password      String?
   image         String?
   emailVerified DateTime?
-  Account       Account[] @relation("UserAccounts")
-  role          String    @default("member") // Add a role field
+  accounts      Account[] @relation("UserAccounts")
+  role          String    @default("member") // บทบาทของผู้ใช้
+  orders        Order[]   @relation("UserOrders") // เชื่อมโยงกับคำสั่งซื้อ
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -43,4 +44,32 @@ model Account {
   user User @relation("UserAccounts", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  category    String
+  image       String
+  stock       Int // จำนวนสินค้าที่มีในสต๊อก
+  soldCount   Int      @default(0) // จำนวนที่ขายได้
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]  @relation("ProductOrders") // เชื่อมโยงกับคำสั่งซื้อ
+}
+
+model Order {
+  id         Int      @id @default(autoincrement())
+  userId     Int // รหัสผู้ใช้ที่ทำการสั่งซื้อ
+  productId  Int // รหัสสินค้าที่ถูกสั่งซื้อ
+  quantity   Int // จำนวนที่สั่งซื้อ
+  totalPrice Float // ราคาทั้งหมด
+  status     String   @default("pending") // สถานะคำสั่งซื้อ (เช่น pending, completed, cancelled)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user    User    @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation("ProductOrders", fields: [productId], references: [id], onDelete: Cascade)
 }
