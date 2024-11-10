@@ -6,9 +6,11 @@ const prisma = new PrismaClient();
 // GET function
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(params.id);
+    const productId = parseInt(params.id, 10);
 
-    if (isNaN(productId)) throw new Error("Invalid product ID");
+    if (isNaN(productId)) {
+      return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
+    }
 
     const product = await prisma.product.findUnique({
       where: { id: productId },
@@ -28,9 +30,11 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 // PUT function
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(params.id);
+    const productId = parseInt(params.id, 10);
 
-    if (isNaN(productId)) throw new Error("Invalid product ID");
+    if (isNaN(productId)) {
+      return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
+    }
 
     const { name, description, price, category, image, stock } = await req.json();
 
@@ -49,9 +53,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 // DELETE function
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
-    const productId = Number(params.id);
+    const productId = parseInt(params.id, 10);
 
-    if (isNaN(productId)) throw new Error("Invalid product ID");
+    if (isNaN(productId)) {
+      return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
+    }
 
     const deletedProduct = await prisma.product.delete({
       where: { id: productId },
