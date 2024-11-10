@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
 export async function GET() {
     const products = await prisma.product.findMany();
-    return Response.json(products)
+    return NextResponse.json(products)
 }
 
 // คุณสามารถเพิ่ม POST ฟังก์ชันถ้าต้องการสร้างผลิตภัณฑ์ใหม่
@@ -21,7 +22,7 @@ export async function POST(req: Request) {
         stock,
       },
     });
-    return new Response(JSON.stringify(newProduct), {
+    return new NextResponse(JSON.stringify(newProduct), {
       status: 201,
       headers: {
         'Content-Type': 'application/json'
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error('Error creating product:', error);
-    return new Response('Failed to create product', {
+    return new NextResponse('Failed to create product', {
       status: 500,
     });
   }
