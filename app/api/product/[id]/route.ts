@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
 // GET function
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, context: any) {
   try {
-    const productId = parseInt(params.id, 10);
+    const productId = parseInt(context.params.id, 10);
 
     if (isNaN(productId)) {
       return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
@@ -28,9 +29,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 // PUT function
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, context: any) {
   try {
-    const productId = parseInt(params.id, 10);
+    const productId = parseInt(context.params.id, 10);
 
     if (isNaN(productId)) {
       return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });
@@ -51,9 +52,9 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 // DELETE function
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, context: any) {
   try {
-    const productId = parseInt(params.id, 10);
+    const productId = parseInt(context.params.id, 10);
 
     if (isNaN(productId)) {
       return NextResponse.json({ message: "Invalid product ID" }, { status: 400 });

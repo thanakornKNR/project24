@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.2",
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^5.22.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "flowbite": "^2.5.2",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/node": "^20",
+    "@types/node": "^20.17.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "daisyui": "^4.12.14",
