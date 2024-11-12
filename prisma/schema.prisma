@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,29 +13,28 @@ model User {
   email         String    @unique
   password      String?
   image         String?
-  emailVerified DateTime?
-  accounts      Account[] @relation("UserAccounts")
-  role          String    @default("member") // บทบาทของผู้ใช้
-  orders        Order[]   @relation("UserOrders") // เชื่อมโยงกับคำสั่งซื้อ
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  role          String    @default("member")
+  emailVerified DateTime?
+  accounts      Account[] @relation("UserAccounts")
+  orders        Order[]   @relation("UserOrders")
 }
 
 model Account {
-  id                String  @id @default(cuid())
   userId            Int
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation("UserAccounts", fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  user              User    @relation("UserAccounts", fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -53,23 +46,22 @@ model Product {
   price       Float
   category    String
   image       String
-  stock       Int // จำนวนสินค้าที่มีในสต๊อก
-  soldCount   Int      @default(0) // จำนวนที่ขายได้
+  stock       Int
+  soldCount   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  orders      Order[]  @relation("ProductOrders") // เชื่อมโยงกับคำสั่งซื้อ
+  orders      Order[]  @relation("ProductOrders")
 }
 
 model Order {
   id         Int      @id @default(autoincrement())
-  userId     Int // รหัสผู้ใช้ที่ทำการสั่งซื้อ
-  productId  Int // รหัสสินค้าที่ถูกสั่งซื้อ
-  quantity   Int // จำนวนที่สั่งซื้อ
-  totalPrice Float // ราคาทั้งหมด
-  status     String   @default("pending") // สถานะคำสั่งซื้อ (เช่น pending, completed, cancelled)
+  userId     Int
+  productId  Int
+  quantity   Int
+  totalPrice Float
+  status     String   @default("pending")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  user    User    @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade)
-  product Product @relation("ProductOrders", fields: [productId], references: [id], onDelete: Cascade)
+  product    Product  @relation("ProductOrders", fields: [productId], references: [id], onDelete: Cascade)
+  user       User     @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade)
 }

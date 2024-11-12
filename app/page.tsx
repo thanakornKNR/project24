@@ -23,6 +23,12 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  // ดึง base URL ที่ใช้สำหรับ fetch API
+  const baseURL = 
+  typeof window !== 'undefined'
+  ? window.location.origin
+  : process.env.NEXTAUTH_URL || '';
+
   useEffect(() => {
     if (status === "loading") return;
     if (status === "unauthenticated") router.push("/");
@@ -32,7 +38,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/product");
+        const response = await fetch(`${baseURL}/api/product`);
         if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
         const data: Product[] = await response.json();
@@ -43,7 +49,7 @@ export default function HomePage() {
     };
 
     fetchProducts();
-  }, []);
+  }, [baseURL]);
 
   return (
     <div>
@@ -67,10 +73,10 @@ export default function HomePage() {
                   <Image
                     src={product.image}
                     alt={product.name}
-                    layout="fill" // ใช้ layout="fill" เพื่อให้ภาพเต็มพื้นที่
-                    objectFit="cover" // ใช้ objectFit="cover" เพื่อให้ภาพครอบคลุมพื้นที่ทั้งหมด
-                    objectPosition="center" // จัดภาพให้อยู่ตรงกลาง
-                    className="rounded-lg" // ปรับขอบของภาพ
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center"
+                    className="rounded-lg"
                   />
                 </figure>
 
