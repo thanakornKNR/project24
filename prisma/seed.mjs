@@ -39,6 +39,8 @@ async function main() {
           }
     ],
   });
+  
+
 
   console.log('Created products:', products);
 }
