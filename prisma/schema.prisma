@@ -21,6 +21,7 @@ model User {
   orders        Order[]   @relation("UserOrders")
 }
 
+
 model Account {
   userId            Int
   type              String
