@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
                 token.id = Number(user.id);
                 token.role = user.role;
             }
-
+            console.log('token', token)
             return token;
         },
         session: async ({ session, token }) => {
@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = Number(token.id);
                 session.user.role = token.role as string;
             }
-
+            console.log('session', session)
             return session;
         },
         async redirect({ baseUrl }) {

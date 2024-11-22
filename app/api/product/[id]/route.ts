@@ -5,7 +5,8 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request, context: { params: { id: string } }) {
     try {
-        const params = await context.params;
+
+        const params = await context.params
         const productId = Number(params.id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
@@ -32,7 +33,8 @@ export async function GET(req: Request, context: { params: { id: string } }) {
 
 export async function PUT(req: Request, context: { params: { id: string } }) {
     try {
-        const params = await context.params;
+       
+        const params = await context.params
         const productId = Number(params.id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
@@ -63,8 +65,8 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
 
 export async function DELETE(req: Request, context: { params: { id: string } }) {
     try {
-        const params = await context.params;
-        const productId = Number(params.id);
+       
+        const productId = Number(context.params.id);
 
         if (isNaN(productId)) throw new Error("Invalid product ID");
 

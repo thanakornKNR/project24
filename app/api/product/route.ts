@@ -7,7 +7,6 @@ export async function GET() {
     return Response.json(products)
 }
 
-// คุณสามารถเพิ่ม POST ฟังก์ชันถ้าต้องการสร้างผลิตภัณฑ์ใหม่
 export async function POST(req: Request) {
   try {
     const { name, description, price, category, image, stock } = await req.json();

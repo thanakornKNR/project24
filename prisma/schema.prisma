@@ -27,6 +27,7 @@ model User {
   updatedAt     DateTime  @updatedAt
 }
 
+
 model Account {
   id                String  @id @default(cuid())
   userId            Int
